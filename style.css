@@ -1,67 +1,107 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
-  background: #f4f4f9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
 }
 
-.container {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  width: 350px;
-  text-align: center;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0078d7;
+  color: white;
+  padding: 15px 20px;
 }
 
 h1 {
-  margin-bottom: 15px;
+  margin: 0;
 }
 
-.input-area {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-button {
-  padding: 8px 12px;
-  background: #4CAF50;
-  color: white;
+#toggleDark {
+  background: white;
+  color: #0078d7;
   border: none;
-  border-radius: 6px;
+  padding: 8px 12px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-button:hover {
-  background: #45a049;
+/* Input Section */
+.input-section {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
 }
 
-ul {
+.input-section input, 
+.input-section select, 
+.input-section button {
+  padding: 8px;
+  font-size: 14px;
+}
+
+#addTaskBtn {
+  background: #0078d7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Task List */
+#taskList {
   list-style: none;
-  padding: 0;
+  margin: 0;
+  padding: 20px;
 }
 
-li {
-  background: #f9f9f9;
-  padding: 10px;
-  margin: 5px 0;
+#taskList li {
+  background: white;
+  margin-bottom: 10px;
+  padding: 12px;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-left: 6px solid #0078d7;
 }
 
-li.completed {
-  text-decoration: line-through;
+.task-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-meta {
+  font-size: 12px;
   color: gray;
+}
+
+button.deleteBtn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Dark Mode */
+body.dark {
+  background: #222;
+  color: white;
+}
+
+body.dark header {
+  background: #444;
+}
+
+body.dark #taskList li {
+  background: #333;
+  border-left: 6px solid #ff9800;
 }
