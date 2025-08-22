@@ -1,31 +1,83 @@
+// Select elements
 const taskInput = document.getElementById("taskInput");
-const addBtn = document.getElementById("addBtn");
+const categorySelect = document.getElementById("category");
+const prioritySelect = document.getElementById("priority");
+const dueDateInput = document.getElementById("dueDate");
+const addTaskBtn = document.getElementById("addTaskBtn");
 const taskList = document.getElementById("taskList");
+const toggleDark = document.getElementById("toggleDark");
 
-addBtn.addEventListener("click", addTask);
+// Load saved tasks
+document.addEventListener("DOMContentLoaded", () => {
+    loadTasks();
+    if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark");
+    }
+});
 
-function addTask() {
-  const taskText = taskInput.value.trim();
-  if (taskText === "") return;
+// Add task
+addTaskBtn.addEventListener("click", () => {
+    const task = taskInput.value.trim();
+    const category = categorySelect.value;
+    const priority = prioritySelect.value;
+    const dueDate = dueDateInput.value;
 
-  const li = document.createElement("li");
-  li.textContent = taskText;
+    if (task === "") return;
 
-  // Toggle completed
-  li.addEventListener("click", () => {
-    li.classList.toggle("completed");
-  });
+    const taskObj = { task, category, priority, dueDate };
+    addTaskToDOM(taskObj);
+    saveTask(taskObj);
 
-  // Delete button
-  const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "❌";
-  deleteBtn.style.marginLeft = "10px";
-  deleteBtn.addEventListener("click", () => {
-    taskList.removeChild(li);
-  });
+    taskInput.value = "";
+    dueDateInput.value = "";
+});
 
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
+// Add task to DOM
+function addTaskToDOM(taskObj) {
+    const li = document.createElement("li");
 
-  taskInput.value = "";
+    const taskInfo = document.createElement("div");
+    taskInfo.className = "task-info";
+    taskInfo.innerHTML = `
+        <strong>${taskObj.task}</strong>
+        <span class="task-meta">📂 ${taskObj.category} | ⚡ ${taskObj.priority} | ⏰ ${taskObj.dueDate || "No deadline"}</span>
+    `;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "❌";
+    deleteBtn.className = "deleteBtn";
+    deleteBtn.onclick = () => {
+        li.remove();
+        removeTask(taskObj);
+    };
+
+    li.appendChild(taskInfo);
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
 }
+
+// Save task
+function saveTask(taskObj) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push(taskObj);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Load tasks
+function loadTasks() {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(taskObj => addTaskToDOM(taskObj));
+}
+
+// Remove task
+function removeTask(taskObj) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks = tasks.filter(t => !(t.task === taskObj.task && t.dueDate === taskObj.dueDate));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Dark Mode
+toggleDark.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+});
