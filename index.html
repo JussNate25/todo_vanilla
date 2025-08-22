@@ -3,18 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo Vanilla App</title>
+  <title>JussNate25 Todo App</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Todo List ✅</h1>
-    <div class="input-area">
-      <input type="text" id="taskInput" placeholder="Enter a task...">
-      <button id="addBtn">Add</button>
+  <header>
+    <h1>📌 JussNate25 Todo App</h1>
+    <button id="toggleDark">🌙 Dark Mode</button>
+  </header>
+
+  <main>
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="Enter new task...">
+      <select id="category">
+        <option value="General">General</option>
+        <option value="Work">Work</option>
+        <option value="Study">Study</option>
+        <option value="Personal">Personal</option>
+      </select>
+      <select id="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <input type="date" id="dueDate">
+      <button id="addTaskBtn">Add Task</button>
     </div>
+
     <ul id="taskList"></ul>
-  </div>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
